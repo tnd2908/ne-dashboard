@@ -1,22 +1,21 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useAuthStore } from "@/store/useAuthStore";
 import {
-    LayoutDashboard,
-    Folder,
-    Users,
-    Settings,
-    LogOut,
-    Code2,
     ChevronRight,
-    ChevronLeft,
+    Code2,
+    Folder,
+    LayoutDashboard,
+    LogOut,
     PanelLeftClose,
-    PanelLeftOpen
+    PanelLeftOpen,
+    Settings,
+    Users
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/useAuthStore";
-import Image from "next/image";
+import { useState } from 'react';
 
 const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -26,8 +25,8 @@ const Sidebar = () => {
 
     const menuItems = [
         { label: "Dashboard", icon: LayoutDashboard, href: "/" },
+        { label: "Users", icon: Users, href: "/users" },
         { label: "Projects", icon: Folder, href: "/projects" },
-        { label: "Team", icon: Users, href: "/team" },
         { label: "Developer Tools", icon: Code2, href: "/tools" },
         { label: "Settings", icon: Settings, href: "/settings" },
     ];
@@ -49,7 +48,7 @@ const Sidebar = () => {
                 }`}
         >
             <div className="py-4 px-2 border-b border-gray-200">
-                <Image className='block h-8' src="/logo.svg" alt="StudyDash" width={100} height={50} />
+                <Image className='block h-8 w-auto' loading="eager" src="/logo.svg" alt="StudyDash" width={100} height={50} />
             </div>
 
             <nav className="flex-1 px-3 py-6 space-y-2">

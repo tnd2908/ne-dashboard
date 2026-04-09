@@ -3,33 +3,21 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import {
     ChevronRight,
-    Code2,
-    Folder,
-    LayoutDashboard,
     LogOut,
     PanelLeftClose,
-    PanelLeftOpen,
-    Settings,
-    Users
+    PanelLeftOpen
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from 'react';
+import { menuItems } from "@/mock/links";
 
 const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
     const logout = useAuthStore((state) => state.logout);
-
-    const menuItems = [
-        { label: "Dashboard", icon: LayoutDashboard, href: "/" },
-        { label: "Users", icon: Users, href: "/users" },
-        { label: "Projects", icon: Folder, href: "/projects" },
-        { label: "Developer Tools", icon: Code2, href: "/tools" },
-        { label: "Settings", icon: Settings, href: "/settings" },
-    ];
 
     const handleLogout = async () => {
         try {
@@ -84,7 +72,7 @@ const Sidebar = () => {
             <div className="p-3 border-t border-gray-100 space-y-2">
                 <button
                     onClick={handleLogout}
-                    className={`flex items-center gap-3 rounded-xl transition-all text-gray-500 hover:text-red-600 hover:bg-red-50 w-full group relative ${isCollapsed ? "justify-center p-3" : "px-3 py-2.5 text-sm font-semibold"
+                    className={`flex cursor-pointer items-center gap-3 rounded-xl transition-all text-gray-500 hover:text-red-600 hover:bg-red-50 w-full group relative ${isCollapsed ? "justify-center p-3" : "px-3 py-2.5 text-sm font-semibold"
                         }`}
                 >
                     <LogOut className="h-5 w-5 shrink-0" />

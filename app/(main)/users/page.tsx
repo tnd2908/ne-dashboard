@@ -30,21 +30,25 @@ export default async function TeamPage({ searchParams }: PageProps) {
     const currentPage = page || '1';
 
     const user = await getUsers(currentPage);
-    console.log(user.total)
 
     if (!user) {
         return <div className="p-6 text-red-500 font-bold">Failed to load users</div>;
     }
+    
+    const pageData = {
+        title: "Team Members",
+        description: "Manage your organization and member permissions."
+    };
 
     return (
         <div className="space-y-6">
             <header className="flex justify-between items-end">
                 <div>
                     <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-                        Team Members
+                        {pageData.title}
                     </h1>
                     <p className="text-gray-500 mt-1">
-                        Manage your organization and member permissions.
+                        {pageData.description}
                     </p>
                 </div>
 

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Mail, Loader2 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
-import { Input, InputPassword } from '../commons';
+import { Input, InputPassword, Button } from '../commons';
 
 interface LoginFormValues {
     email: string;
@@ -91,7 +91,7 @@ const LoginForm = () => {
                 </div>
             )}
 
-            <button
+            <Button
                 type="submit"
                 disabled={isLoading}
                 className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-brand hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand disabled:opacity-70 transition-all shadow-lg shadow-brand/20 active:scale-[0.98]"
@@ -101,7 +101,7 @@ const LoginForm = () => {
                 ) : (
                     "Sign In"
                 )}
-            </button>
+            </Button>
         </form>
     );
 };

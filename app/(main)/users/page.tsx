@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import UsersTable from '@/app/components/ui/UsersTable';
+import Button from '@/app/components/commons/Button';
 
 interface PageProps {
     searchParams: Promise<{ page?: string }>;
@@ -47,9 +48,7 @@ export default async function TeamPage({ searchParams }: PageProps) {
                     </p>
                 </div>
 
-                <button className="bg-brand text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-brand/20 active:scale-95 transition-all">
-                    Add Member
-                </button>
+                <Button variant="primary">Add Member</Button>
             </header>
 
             <Suspense key={currentPage} fallback={<div>Loading...</div>}>

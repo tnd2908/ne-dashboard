@@ -48,7 +48,7 @@ const Sidebar = () => {
                 }`}
         >
             <div className="py-4 px-2 border-b border-gray-200">
-                <Image className='block h-8 w-auto' loading="eager" src="/logo.svg" alt="StudyDash" width={100} height={50} />
+                <Image className='block h-8 w-auto' loading="eager" src="/logo.svg" alt="Logo" width={100} height={50} />
             </div>
 
             <nav className="flex-1 px-3 py-6 space-y-2">

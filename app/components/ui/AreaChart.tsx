@@ -17,6 +17,12 @@ const data = [
     { name: "Apr", total: 900 },
     { name: "May", total: 1200 },
     { name: "Jun", total: 1100 },
+    { name: "Jul", total: 1300 },
+    { name: "Aug", total: 1400 },
+    { name: "Sep", total: 500 },
+    { name: "Oct", total: 600 },
+    { name: "Nov", total: 300 },
+    { name: "Dec", total: 800 },
 ];
 
 export const OverviewChart = () => {
@@ -25,7 +31,7 @@ export const OverviewChart = () => {
             <h3 className="text-sm font-bold text-gray-500 mb-6 uppercase tracking-wider">
                 Growth Overview
             </h3>
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width={'100%'} height={300} className="w-full h-full">
                 <AreaChart data={data}>
                     <defs>
                         <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">

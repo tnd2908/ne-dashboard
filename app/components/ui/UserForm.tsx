@@ -2,17 +2,17 @@
 
 import { Button, Input } from "@/app/components/commons";
 import { User } from "@/types/types";
+import { redirect, RedirectType } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 
 interface UserFormProps {
     initialData?: Partial<User>;
-    onSubmit: (data: User) => void;
     isLoading?: boolean;
 }
 
-const UserForm = ({ initialData, onSubmit, isLoading }: UserFormProps) => {
+const UserForm = ({ initialData, isLoading }: UserFormProps) => {
     const {
         register,
         handleSubmit,
@@ -42,13 +42,12 @@ const UserForm = ({ initialData, onSubmit, isLoading }: UserFormProps) => {
         }
     }, [initialData, reset]);
 
-    const submitAndReset = (data: User) => {
-        onSubmit(data);
-        reset();
-    }
+    const onSubmit = () => {
+        redirect('/users', RedirectType.push);
+    };
 
     return (
-        <form onSubmit={handleSubmit(submitAndReset)} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-4">
                 <div>
                     <label className="block text-sm font-bold text-gray-700 mb-1">

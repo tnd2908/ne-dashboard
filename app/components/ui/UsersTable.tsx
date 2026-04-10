@@ -4,10 +4,9 @@ import { Button, Table } from "@/app/components/commons";
 import { User } from '@/types/types';
 import { Pencil, Trash2 } from "lucide-react";
 import Image from 'next/image';
-import { useMemo, useState, useCallback } from 'react'; // Thêm useCallback
-import Drawer from "../commons/Drawer";
+import Link from "next/link";
+import { useCallback, useMemo } from 'react'; // Thêm useCallback
 import { Column } from '../commons/Table';
-import UserForm from "./UserForm";
 
 interface UsersTableProps {
     users: User[];
@@ -22,30 +21,12 @@ const ROLE_CONFIG: Record<string, string> = {
 };
 
 const UsersTable = ({ users, total, currentPage }: UsersTableProps) => {
-    const [open, setOpen] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
-    const handleEditClick = useCallback((user: User) => {
-        setSelectedUser(user);
-        setOpen(true);
-    }, []);
-
     const handleDeleteClick = useCallback((user: User) => {
         const confirmDelete = window.confirm(`Are you sure you want to delete ${user.name}?`);
         if (confirmDelete) {
             console.log("Deleting user:", user.id);
         }
     }, []);
-
-    const handleClose = useCallback(() => {
-        setOpen(false);
-        setSelectedUser(null);
-    }, []);
-
-    const handleAddClick = () => {
-        setSelectedUser(null);
-        setOpen(true);
-    };
 
     const columns = useMemo<Column<User>[]>(() => [
         {
@@ -105,12 +86,12 @@ const UsersTable = ({ users, total, currentPage }: UsersTableProps) => {
             align: "right",
             render: (user) => (
                 <div className="flex gap-2 justify-end">
-                    <button
-                        onClick={() => handleEditClick(user)}
+                    <Link
+                        href={`/users/edit/${user.id}`}
                         className="p-2 rounded-lg border border-gray-200 text-gray-400 hover:text-brand hover:border-brand transition-all bg-white shadow-sm"
                     >
                         <Pencil className="w-4 h-4" />
-                    </button>
+                    </Link>
                     <button
                         onClick={() => handleDeleteClick(user)}
                         className="p-2 rounded-lg border border-gray-200 text-gray-400 hover:text-red-500 hover:border-red-500 transition-all bg-white shadow-sm"
@@ -120,28 +101,13 @@ const UsersTable = ({ users, total, currentPage }: UsersTableProps) => {
                 </div>
             ),
         },
-    ], [currentPage, handleEditClick, handleDeleteClick]);
+    ], [currentPage, handleDeleteClick]);
 
     return (
         <>
             <div className="mb-6">
-                <Button variant="primary" onClick={handleAddClick}>Add New User</Button>
+                <Button variant="primary" href="/users/create">Add New User</Button>
             </div>
-
-            <Drawer
-                isOpen={open}
-                onClose={handleClose}
-                title={selectedUser ? "Edit User" : "Add Member"}
-            >
-                <UserForm
-                    initialData={selectedUser || undefined}
-                    onSubmit={(data) => {
-                        console.log("Form Submit:", data);
-                        handleClose();
-                    }}
-                />
-            </Drawer>
-
             <Table
                 data={users}
                 columns={columns}

@@ -51,8 +51,6 @@ export default async function TeamPage({ searchParams }: PageProps) {
                         {pageData.description}
                     </p>
                 </div>
-
-                <Button variant="primary">Add Member</Button>
             </header>
 
             <Suspense key={currentPage} fallback={<div>Loading...</div>}>

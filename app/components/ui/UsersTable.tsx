@@ -1,39 +1,72 @@
 "use client";
 
-import Image from 'next/image';
-import { Table } from "@/app/components/commons";
-import { Column } from '../commons/Table';
+import { Button, Table } from "@/app/components/commons";
 import { User } from '@/types/types';
+import { Pencil, Trash2 } from "lucide-react";
+import Image from 'next/image';
+import { useMemo, useState, useCallback } from 'react'; // Thêm useCallback
+import Drawer from "../commons/Drawer";
+import { Column } from '../commons/Table';
+import UserForm from "./UserForm";
 
 interface UsersTableProps {
     users: User[];
     total: number;
     currentPage: number;
 }
+
+const ROLE_CONFIG: Record<string, string> = {
+    admin: 'bg-purple-50 text-purple-700 border-purple-100',
+    owner: 'bg-amber-50 text-amber-700 border-amber-100',
+    default: 'bg-gray-50 text-gray-600 border-gray-100'
+};
+
 const UsersTable = ({ users, total, currentPage }: UsersTableProps) => {
-    const getRoleStyles = (role: string) => {
-        switch (role.toLowerCase()) {
-            case 'admin': return 'bg-purple-50 text-purple-700 border-purple-100';
-            case 'owner': return 'bg-amber-50 text-amber-700 border-amber-100';
-            default: return 'bg-gray-50 text-gray-600 border-gray-100';
+    const [open, setOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+    const handleEditClick = useCallback((user: User) => {
+        setSelectedUser(user);
+        setOpen(true);
+    }, []);
+
+    const handleDeleteClick = useCallback((user: User) => {
+        const confirmDelete = window.confirm(`Are you sure you want to delete ${user.name}?`);
+        if (confirmDelete) {
+            console.log("Deleting user:", user.id);
         }
+    }, []);
+
+    const handleClose = useCallback(() => {
+        setOpen(false);
+        setSelectedUser(null);
+    }, []);
+
+    const handleAddClick = () => {
+        setSelectedUser(null);
+        setOpen(true);
     };
 
-    const columns: Column<User>[] = [
+    const columns = useMemo<Column<User>[]>(() => [
         {
             header: "Name",
             key: "name",
             render: (user) => (
                 <div className="flex items-center gap-4">
-                    <div className="relative h-10 w-10 shrink-0">
-                        {user?.image && (
+                    <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-gray-100">
+                        {user?.image ? (
                             <Image
                                 src={user.image}
                                 alt={user.name}
-                                width={64}
-                                height={64}
-                                className="rounded-full border border-gray-100 object-cover"
+                                fill
+                                sizes="40px"
+                                className="object-cover"
+                                priority={currentPage === 1}
                             />
+                        ) : (
+                            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-[10px] text-gray-400 font-bold">
+                                {user.name.charAt(0)}
+                            </div>
                         )}
                     </div>
                     <div className="min-w-0">
@@ -56,25 +89,68 @@ const UsersTable = ({ users, total, currentPage }: UsersTableProps) => {
         {
             header: "Access Level",
             key: "role",
-            render: (user) => (
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border capitalize ${getRoleStyles(user.role)}`}>
-                    {user.role}
-                </span>
-            ),
+            render: (user) => {
+                const roleKey = user.role.toLowerCase();
+                const style = ROLE_CONFIG[roleKey] || ROLE_CONFIG.default;
+                return (
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border capitalize ${style}`}>
+                        {user.role}
+                    </span>
+                );
+            },
         },
         {
             header: "Action",
             key: "action",
             align: "right",
-            render: () => (
-                <button className="font-bold text-brand hover:opacity-70 text-sm">
-                    Edit
-                </button>
+            render: (user) => (
+                <div className="flex gap-2 justify-end">
+                    <button
+                        onClick={() => handleEditClick(user)}
+                        className="p-2 rounded-lg border border-gray-200 text-gray-400 hover:text-brand hover:border-brand transition-all bg-white shadow-sm"
+                    >
+                        <Pencil className="w-4 h-4" />
+                    </button>
+                    <button
+                        onClick={() => handleDeleteClick(user)}
+                        className="p-2 rounded-lg border border-gray-200 text-gray-400 hover:text-red-500 hover:border-red-500 transition-all bg-white shadow-sm"
+                    >
+                        <Trash2 className="w-4 h-4" />
+                    </button>
+                </div>
             ),
         },
-    ];
+    ], [currentPage, handleEditClick, handleDeleteClick]);
 
-    return <Table data={users} columns={columns} total={total} pageSize={10} currentPage={currentPage}/>;
+    return (
+        <>
+            <div className="mb-6">
+                <Button variant="primary" onClick={handleAddClick}>Add New User</Button>
+            </div>
+
+            <Drawer
+                isOpen={open}
+                onClose={handleClose}
+                title={selectedUser ? "Edit User" : "Add Member"}
+            >
+                <UserForm
+                    initialData={selectedUser || undefined}
+                    onSubmit={(data) => {
+                        console.log("Form Submit:", data);
+                        handleClose();
+                    }}
+                />
+            </Drawer>
+
+            <Table
+                data={users}
+                columns={columns}
+                total={total}
+                pageSize={10}
+                currentPage={currentPage}
+            />
+        </>
+    );
 };
 
 export default UsersTable;

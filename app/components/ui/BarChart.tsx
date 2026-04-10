@@ -24,7 +24,7 @@ export const ResourceChart = () => {
             <h3 className="text-sm font-bold text-gray-500 mb-6 uppercase tracking-wider">
                 Resources by Department
             </h3>
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={200} className={'h-full w-full'}>
                 <BarChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
                     <XAxis

@@ -16,9 +16,8 @@ export async function GET(
       );
     }
 
-    // Remove password from response
     const { password, ...userWithoutPassword } = user;
-    void password; // Explicitly mark as unused
+    void password;
 
     return NextResponse.json(userWithoutPassword, {
       status: 200

@@ -105,9 +105,6 @@ const UsersTable = ({ users, total, currentPage }: UsersTableProps) => {
 
     return (
         <>
-            <div className="mb-6">
-                <Button variant="primary" href="/users/create">Add New User</Button>
-            </div>
             <Table
                 data={users}
                 columns={columns}

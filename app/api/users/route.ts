@@ -4,8 +4,22 @@ import { MOCK_USERS } from '@/mock/users';
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
-        const page = parseInt(searchParams.get('page') || '1');
-        const limit = 10;
+        const pageParam = searchParams.get('page');
+        const limitParam = searchParams.get('limit');
+
+        if (!limitParam) {
+            return NextResponse.json({
+                data: MOCK_USERS,
+                total: MOCK_USERS.length,
+                page: 1,
+                limit: MOCK_USERS.length
+            }, {
+                status: 200
+            });
+        }
+
+        const page = parseInt(pageParam || '1');
+        const limit = parseInt(limitParam);
 
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;

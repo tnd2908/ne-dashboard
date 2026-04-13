@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, forwardRef } from "react";
 import { Lock, Eye, EyeOff } from "lucide-react";
 import Input from "./Input";

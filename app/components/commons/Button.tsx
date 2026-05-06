@@ -24,7 +24,7 @@ const Button = ({
 
     const variantStyles = {
         primary: "bg-brand text-white shadow-lg shadow-brand/20",
-        outline: "bg-transparent border-2 border-brand text-brand hover:text-white",
+        outline: "bg-transparent border-2 border-brand text-brand hover:bg-white",
         light: "bg-brand/10 text-brand hover:bg-brand/20",
         default: "bg-transparent text-gray-600 hover:text-brand px-2",
     };

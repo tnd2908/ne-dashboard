@@ -3,6 +3,11 @@ import { ResourceChart } from "../components/ui/BarChart";
 import StatCard from "../components/ui/StatCard";
 import statistics from "../../mock/statistics";
 
+export const metadata = {
+    title: "BE Dashboard",
+    description: "Everything is protected by Middleware."
+}
+
 export default function HomePage() {
     const pageData = {
         title: "Dashboard",

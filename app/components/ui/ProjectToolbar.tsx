@@ -33,7 +33,7 @@ const ProjectToolbar = ({ projects }: ProjectToolbarProps) => {
                 </div>
 
                 {view === "grid" && (
-                    <div className="flex pb-3 relative items-center gap-2">
+                    <div className="md:flex hidden pb-3 relative items-center gap-2">
                         <span className="text-sm text-gray-500 font-medium">Columns:</span>
                         <div className="flex gap-1 bg-white border border-gray-200 p-1 rounded-xl">
                             {[2, 3, 4, 5].map((num) => (

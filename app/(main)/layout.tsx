@@ -5,13 +5,18 @@ interface DashboardLayoutProps {
     children: React.ReactNode;
 }
 
+export const metadata = {
+    title: "BE Dashboard",
+    description: "Everything is protected by Middleware."
+}
+
 export default function DashboardLayout({
     children,
 }: DashboardLayoutProps) {
     return (
         <div className="min-h-screen w-full justify-start items-start overflow-x-clip bg-gray-50 flex">
             <Sidebar />
-            <div className="flex-1 flex flex-col min-h-screen">
+            <div className="flex-1 md:pb-0 pb-16 flex flex-col min-h-screen">
                 <Header />
                 <main className="p-8">
                     <div className="max-w-6xl mx-auto">

@@ -20,11 +20,11 @@ const data = [
 
 export const ResourceChart = () => {
     return (
-        <div className="h-[300px] w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+        <div className="min-h-[300px] w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
             <h3 className="text-sm font-bold text-gray-500 mb-6 uppercase tracking-wider">
                 Resources by Department
             </h3>
-            <ResponsiveContainer width="100%" height={200} className={'h-full w-full'}>
+            <ResponsiveContainer width="100%" height={300} className={'h-full w-full'}>
                 <BarChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
                     <XAxis

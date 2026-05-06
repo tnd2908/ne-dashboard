@@ -27,7 +27,7 @@ const data = [
 
 export const OverviewChart = () => {
     return (
-        <div className="h-[300px] w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+        <div className="min-h-[300px] w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
             <h3 className="text-sm font-bold text-gray-500 mb-6 uppercase tracking-wider">
                 Growth Overview
             </h3>

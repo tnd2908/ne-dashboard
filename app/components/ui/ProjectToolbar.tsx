@@ -33,7 +33,7 @@ const ProjectToolbar = ({ projects }: ProjectToolbarProps) => {
                 </div>
 
                 {view === "grid" && (
-                    <div className="flex items-center gap-2">
+                    <div className="flex pb-3 relative items-center gap-2">
                         <span className="text-sm text-gray-500 font-medium">Columns:</span>
                         <div className="flex gap-1 bg-white border border-gray-200 p-1 rounded-xl">
                             {[2, 3, 4, 5].map((num) => (
@@ -47,6 +47,7 @@ const ProjectToolbar = ({ projects }: ProjectToolbarProps) => {
                                 </button>
                             ))}
                         </div>
+                        <input className="absolute -bottom-3 right-2 accent-brand" type='range' min={2} max={5} value={columns} onChange={(e) => setColumns(parseInt(e.target.value))} />
                     </div>
                 )}
             </div>

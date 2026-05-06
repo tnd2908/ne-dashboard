@@ -1,9 +1,9 @@
 
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import { User, Mail, Briefcase, Building, Shield, Edit, Trash2 } from 'lucide-react';
 import Button from '@/app/components/commons/Button';
 import { getUser } from '@/services/user.service';
+import { Briefcase, Building, Edit, Mail, Shield, User } from 'lucide-react';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -41,19 +41,10 @@ export default async function UserDetailPage({ params }: PageProps) {
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    <Button variant="outline">
+                    <Button href={`/users/edit/${id}`} variant="outline">
                         <div className='flex items-center gap-2 text-nowrap'>
                             <Edit className="w-4 h-4" />
                             Edit User
-                        </div>
-                    </Button>
-                    <Button
-                        variant="outline"
-                        className="border-red-500 text-red-500 hover:text-white hover:bg-red-500"
-                    >
-                        <div className='flex items-center gap-2 text-nowrap'>
-                            <Trash2 className="w-4 h-4" />
-                            Delete User
                         </div>
                     </Button>
                 </div>

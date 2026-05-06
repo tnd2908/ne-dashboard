@@ -1,12 +1,13 @@
 "use client";
 
-import { Button, Table } from "@/app/components/commons";
+import { Table } from "@/app/components/commons";
 import { User } from '@/types/types';
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import Image from 'next/image';
 import Link from "next/link";
 import { useCallback, useMemo } from 'react'; // Thêm useCallback
 import { Column } from '../commons/Table';
+import { useAuthStore } from '@/store/useAuthStore';
 
 interface UsersTableProps {
     users: User[];
@@ -21,6 +22,8 @@ const ROLE_CONFIG: Record<string, string> = {
 };
 
 const UsersTable = ({ users, total, currentPage }: UsersTableProps) => {
+    const currentUser = useAuthStore((state) => state.user);
+    
     const handleDeleteClick = useCallback((user: User) => {
         const confirmDelete = window.confirm(`Are you sure you want to delete ${user.name}?`);
         if (confirmDelete) {
@@ -87,14 +90,21 @@ const UsersTable = ({ users, total, currentPage }: UsersTableProps) => {
             render: (user) => (
                 <div className="flex gap-2 justify-end">
                     <Link
+                        href={`/users/${user.id}`}
+                        className="p-2 rounded-lg border border-gray-200 text-gray-400 hover:text-brand hover:border-brand transition-all bg-white shadow-sm"
+                    >
+                        <Eye className="w-4 h-4" />
+                    </Link>
+                    <Link
                         href={`/users/edit/${user.id}`}
                         className="p-2 rounded-lg border border-gray-200 text-gray-400 hover:text-brand hover:border-brand transition-all bg-white shadow-sm"
                     >
                         <Pencil className="w-4 h-4" />
                     </Link>
                     <button
+                        disabled={user.id === currentUser?.id}
                         onClick={() => handleDeleteClick(user)}
-                        className="p-2 rounded-lg border border-gray-200 text-gray-400 hover:text-red-500 hover:border-red-500 transition-all bg-white shadow-sm"
+                        className="p-2 disabled:hidden disabled:opacity-50 disabled:hover:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:text-gray-400 rounded-lg border border-gray-200 text-gray-400 hover:text-red-500 hover:border-red-500 transition-all bg-white shadow-sm"
                     >
                         <Trash2 className="w-4 h-4" />
                     </button>

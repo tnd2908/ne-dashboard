@@ -10,7 +10,7 @@ interface ProjectGridProps {
 const ProjectGrid = ({ projects, columns }: ProjectGridProps) => {
     const gridCols: Record<number, string> = {
         2: "grid-cols-1 md:grid-cols-2 gap-4",
-        3: "grid-cols-1 md:grid-cols-3 gap-4",
+        3: "grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4",
         4: "grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3",
         5: "grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2",
     };
